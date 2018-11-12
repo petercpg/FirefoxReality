@@ -1,7 +1,7 @@
 package org.mozilla.vrbrowser.ui.widgets;
 
 import android.content.Context;
-
+import android.net.Uri;
 import org.mozilla.vrbrowser.R;
 
 import java.util.ArrayList;
@@ -13,14 +13,14 @@ public class VideoProjectionMenuWidget extends MenuWidget {
 
     @IntDef(value = { VIDEO_PROJECTION_3D_SIDE_BY_SIDE, VIDEO_PROJECTION_360,
                       VIDEO_PROJECTION_360_STEREO, VIDEO_PROJECTION_180,
-                      VIDEO_PROJECTION_180_STEREO_LEFT_RIGTH, VIDEO_PROJECTION_180_STEREO_TOP_BOTTOM })
+                      VIDEO_PROJECTION_180_STEREO_LEFT_RIGHT, VIDEO_PROJECTION_180_STEREO_TOP_BOTTOM })
     public @interface VideoProjectionFlags {}
 
     public static final int VIDEO_PROJECTION_3D_SIDE_BY_SIDE = 0;
     public static final int VIDEO_PROJECTION_360 = 1;
     public static final int VIDEO_PROJECTION_360_STEREO = 2;
     public static final int VIDEO_PROJECTION_180 = 3;
-    public static final int VIDEO_PROJECTION_180_STEREO_LEFT_RIGTH = 4;
+    public static final int VIDEO_PROJECTION_180_STEREO_LEFT_RIGHT = 4;
     public static final int VIDEO_PROJECTION_180_STEREO_TOP_BOTTOM = 5;
 
     public interface Delegate {
@@ -90,7 +90,7 @@ public class VideoProjectionMenuWidget extends MenuWidget {
         mItems.add(new MenuItem(R.string.video_mode_180_left_right, R.drawable.ic_icon_videoplayback_180_stereo_leftright, new Runnable() {
             @Override
             public void run() {
-                handleClick(VIDEO_PROJECTION_180_STEREO_LEFT_RIGTH);
+                handleClick(VIDEO_PROJECTION_180_STEREO_LEFT_RIGHT);
             }
         }));
 
@@ -117,5 +117,38 @@ public class VideoProjectionMenuWidget extends MenuWidget {
 
     public @VideoProjectionFlags int getSelectedProjection() {
         return mSelectedProjection;
+    }
+
+    public static int getAutomaticProjection(String aURL) {
+        if (aURL == null) {
+            return -1;
+        }
+
+        Uri uri = Uri.parse(aURL);
+        if (uri == null) {
+            return -1;
+        }
+
+        String projection = uri.getQueryParameter("mozVideoProjection");
+        if (projection == null) {
+            return -1;
+        }
+        projection = projection.toLowerCase();
+
+        if (projection.equals("360")) {
+            return VIDEO_PROJECTION_360;
+        } else if (projection.equals("360s")) {
+            return VIDEO_PROJECTION_360_STEREO;
+        } else if (projection.equals("180")) {
+            return VIDEO_PROJECTION_180;
+        } else if (projection.equals("180lr")) {
+            return VIDEO_PROJECTION_180_STEREO_LEFT_RIGHT;
+        } else if (projection.equals("180tp")) {
+            return VIDEO_PROJECTION_180_STEREO_TOP_BOTTOM;
+        } else if (projection.equals("3d")) {
+            return VIDEO_PROJECTION_3D_SIDE_BY_SIDE;
+        }
+
+        return -1;
     }
 }
