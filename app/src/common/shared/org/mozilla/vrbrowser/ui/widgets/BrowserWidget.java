@@ -76,6 +76,7 @@ public class BrowserWidget extends View implements Widget, SessionStore.SessionC
         aPlacement.anchorX = 0.5f;
         aPlacement.anchorY = 0.0f;
         aPlacement.visible = true;
+        aPlacement.textureScale = 1.0f;
     }
 
     public void pauseCompositor() {
