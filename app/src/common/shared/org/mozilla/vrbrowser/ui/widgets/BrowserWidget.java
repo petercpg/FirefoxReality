@@ -45,7 +45,6 @@ public class BrowserWidget extends UIWidget implements SessionStore.SessionChang
     private int mWidthBackup;
     private int mHeightBackup;
     private int mBorderWidth;
-    private BookmarksWidget mBookmarksWidget;
     Runnable mFirstDrawCallback;
 
     public BrowserWidget(Context aContext, int aSessionId) {
@@ -108,10 +107,6 @@ public class BrowserWidget extends UIWidget implements SessionStore.SessionChang
         clearFocus();
     }
 
-    public void setBookmarksWidget(BookmarksWidget aWidget) {
-        mBookmarksWidget = aWidget;
-    }
-
     public void pauseCompositor() {
         if (mDisplay == null) {
             return;
@@ -163,7 +158,6 @@ public class BrowserWidget extends UIWidget implements SessionStore.SessionChang
 
     @Override
     public void resizeByMultiplier(float aspect, float multiplier) {
-        mMultiplier = multiplier;
         float worldWidth = WidgetPlacement.floatDimension(getContext(), R.dimen.window_world_width);
         float worldHeight = worldWidth / aspect;
         float area = worldWidth * worldHeight * multiplier;
