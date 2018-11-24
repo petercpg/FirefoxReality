@@ -12,7 +12,7 @@
     <!-- This string is used as the body of the Private Browsing page that is opened when the
     Private Browsing Mode button from the tray is clicked. -->
     <string name="private_browsing_body"><![CDATA[
-<p>當您在隱私視窗中瀏覽時，%1$s <strong>將不會儲存</ strong>: </p>
+<p>當您在隱私視窗中瀏覽時，%1$s <strong>將不會儲存</strong>: </p>
 <ul class =“two-column”>
 	<li>造訪過的頁面紀錄</li>
 	<li>搜尋紀錄</li>
